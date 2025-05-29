@@ -3,34 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Prompt Genie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>Prompt Genie</h1>
-  <label for="provider">Choose Provider:</label>
+  <div class="container">
+    <h1>Prompt Genie</h1>
+    <label for="provider">Choose Provider:</label>
     <select id="provider">
-        <option value="openai">OpenAI</option>
-        <option value="together">Together.ai</option>
-        <option value="huggingface">Hugging Face</option>
+      <option value="openai">OpenAI</option>
+      <option value="together">Together.ai</option>
+      <option value="huggingface">Hugging Face</option>
     </select>
-    <br><br>
-  <textarea id="task" rows="6" cols="60" placeholder="Enter your task in simple English"></textarea><br>
-  <button onclick="generatePrompt()">Generate Prompt</button>
-  <h2>Optimized Prompt:</h2>
-  <pre id="result"></pre>
-
-  <script>
-    async function generatePrompt() {
-      const task = document.getElementById('task').value;
-      const provider = document.getElementById('provider').value;
-      const response = await fetch('http://127.0.0.1:8000/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task, provider })
-      });
-      const data = await response.json();
-      const output = result.prompt || result.error || "❌ Unexpected error";
-      document.getElementById('result').innerText = data.prompt || data.error;
-    }
-  </script>
+    <label for="task">Your Task:</label>
+    <textarea id="task" rows="6" placeholder="Enter your task in simple English"></textarea>
+    <button onclick="generatePrompt()">Generate Prompt</button>
+    <h2>Optimized Prompt:</h2>
+    <pre id="result"></pre>
+    <script>
+      async function generatePrompt() {
+        const task = document.getElementById('task').value;
+        const provider = document.getElementById('provider').value;
+        try {
+          const response = await fetch('http://127.0.0.1:8000/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ task, provider })
+          });
+          const data = await response.json();
+          document.getElementById('result').innerText = data.prompt || data.error || "❌ Unexpected error";
+        } catch (err) {
+          document.getElementById('result').innerText = "❌ Unable to reach server. Check console.";
+          console.error(err);
+        }
+      }
+    </script>
+  </div>
 </body>
 </html>

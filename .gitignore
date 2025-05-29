@@ -11,9 +11,8 @@ pip-log.txt
 .coverage
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-# Pytest cache
-.pytest_cache/
 
 # local settings file
 .env
-# IDE specific files  
+app/__pycache__/main.cpython-313.pyc
+app/__pycache__/prompt_creator.cpython-313.pyc
