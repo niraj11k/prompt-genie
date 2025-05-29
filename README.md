@@ -64,5 +64,4 @@ prompt-genie/
 ---
 
 ## ❓ Need Help?
-
 Message your mentor or read the FastAPI and OpenAI documentation to understand each part.
