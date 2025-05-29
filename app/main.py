@@ -27,7 +27,10 @@ async def read_root(request: Request):
 async def generate_prompt(request: Request):
     body = await request.json()
     task_description = body.get("task")
+    provider = body.get("provider")
     if not task_description:
         return {"error": "Please provide a 'task'"}
-    prompt = create_prompt(task_description)
+    if not provider:
+        return {"error": "Please select a 'provider'"}
+    prompt = create_prompt(task_description, provider)
     return {"prompt": prompt}
