@@ -8,6 +8,8 @@ from app.prompt_creator import create_prompt
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
 # Allow HTML/JS on localhost to call FastAPI
 app.add_middleware(
     CORSMiddleware,

@@ -1,5 +1,6 @@
 # app/prompt_creator.py
 import os
+import openai
 import requests
 from dotenv import load_dotenv
 
@@ -10,6 +11,11 @@ TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
+<<<<<<< HEAD
+
+#TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")  # Keep your key secret
+
+=======
 
 #TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")  # Keep your key secret
 
@@ -26,6 +32,7 @@ load_dotenv()
 TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 HF_TOKEN = os.getenv("HF_TOKEN")
+>>>>>>> 999ee2dcc801f218fdc8626161d2a1b635629469
 
 def create_prompt(task_description: str, provider: str) -> str:
     provider = provider.lower()
@@ -52,7 +59,11 @@ def create_prompt(task_description: str, provider: str) -> str:
                 "model": "mistralai/Mistral-7B-Instruct-v0.1",
                 "messages": [
                     {"role": "system", "content": "You are an experienced prompt engineer from Howard University and You are an expert in generating prompts for AI models."},
+<<<<<<< HEAD
+                    {"role": "user", "content": f"Review this user prompt yourself and Optimize this user prompt to make it extremly detailed to get an output as a professional level without asking any follow up questions. Here is the user prompt: {task_description}"}
+=======
             {"role": "user", "content": f"Review this user prompt yourself and Optimize this user prompt to make it extremly detailed to get an output as a professional level: {task_description}"}
+>>>>>>> 999ee2dcc801f218fdc8626161d2a1b635629469
                 ]
             }
             response = requests.post(url, headers=headers, json=payload)
