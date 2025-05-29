@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Prompt Genie</title>
+<<<<<<< HEAD
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -39,5 +40,36 @@
       }
     </script>
   </div>
+=======
+</head>
+<body>
+  <h1>Prompt Genie</h1>
+  <label for="provider">Choose Provider:</label>
+    <select id="provider">
+        <option value="openai">OpenAI</option>
+        <option value="together">Together.ai</option>
+        <option value="huggingface">Hugging Face</option>
+    </select>
+    <br><br>
+  <textarea id="task" rows="6" cols="60" placeholder="Enter your task in simple English"></textarea><br>
+  <button onclick="generatePrompt()">Generate Prompt</button>
+  <h2>Optimized Prompt:</h2>
+  <pre id="result"></pre>
+
+  <script>
+    async function generatePrompt() {
+      const task = document.getElementById('task').value;
+      const provider = document.getElementById('provider').value;
+      const response = await fetch('http://127.0.0.1:8000/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task, provider })
+      });
+      const data = await response.json();
+      const output = result.prompt || result.error || "❌ Unexpected error";
+      document.getElementById('result').innerText = data.prompt || data.error;
+    }
+  </script>
+>>>>>>> 999ee2dcc801f218fdc8626161d2a1b635629469
 </body>
 </html>
