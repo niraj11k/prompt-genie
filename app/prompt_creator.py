@@ -10,7 +10,6 @@ load_dotenv()
 TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 HF_TOKEN = os.getenv("HF_TOKEN")
-#TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")  # Keep your key secret
 def create_prompt(task_description: str, provider: str) -> str:
     provider = provider.lower()
 
