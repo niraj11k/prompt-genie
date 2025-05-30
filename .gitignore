@@ -3,6 +3,7 @@ venv/
 __pycache__/
 # Python bytecode files
 *.py[cod]
+*.pyc
 # Distribution / packaging
 dist/
 # Installer logs
@@ -16,5 +17,7 @@ pip-log.txt
 .env
 __pycache__/main.cpython-313.pyc
 __pycache__/prompt_creator.cpython-313.pyc
+app/__pycache__/main.cpython-313.pyc
+app/__pycache__/prompt_creator.cpython-313.pyc
 app/__pycache__/main.cpython-313.pyc
 app/__pycache__/prompt_creator.cpython-313.pyc
