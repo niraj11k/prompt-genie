@@ -20,8 +20,8 @@ def create_prompt(task_description: str, provider: str) -> str:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You're a helpful assistant."},
-                    {"role": "user", "content": task_description}
+                    {"role": "system", "content": "You are an experienced prompt engineer from MIT who is an expert in generating prompts for varoius AI models.Review this simple prompt yourself and rewrite this to optimize and make it extremly detailed to get an professional level output. "},
+                    {"role": "user", "content": "Here is the user prompt: {task_description}"}
                 ]
             )
             return response['choices'][0]['message']['content']
@@ -35,7 +35,7 @@ def create_prompt(task_description: str, provider: str) -> str:
             payload = {
                 "model": "mistralai/Mistral-7B-Instruct-v0.1",
                 "messages": [
-                    {"role": "system", "content": "You are an experienced prompt engineer from MIT who is an expert in generating prompts for varoius AI models.Review this simple prompt yourself and Optimize this to make it extremly detailed to get an professional level output. Set an appropirate role based on user input and Do not include any follow up questions in the output prompt."},
+                    {"role": "system", "content": "You have to create a prompt that will get an output at a professional level. Before sending me the prompt, review it yourself and optimize to make it extremely detailed."},
                     {"role": "user", "content": f"Here is the user prompt: {task_description}"}
                 ]
             }
