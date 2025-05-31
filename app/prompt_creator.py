@@ -32,7 +32,7 @@ def create_prompt(task_description: str, provider: str) -> str:
                 "Content-Type": "application/json"
             }
             payload = {
-                "model": "mistralai/Mistral-7B-Instruct-v0.1",
+                "model": "meta-llama/Llama-3.2-3B-Instruct-Turbo",
                 "messages": [
                     {"role": "system", "content": "You have to create a prompt that will get an output at a professional level. Before sending me the prompt, review it yourself and optimize to make it extremely detailed."},
                     {"role": "user", "content": f"Here is the user prompt: {task_description}"}
