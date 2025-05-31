@@ -16,10 +16,3 @@ pip-log.txt
 # local settings file
 .env
 start.sh
-__pycache__/main.cpython-313.pyc
-__pycache__/prompt_creator.cpython-313.pyc
-app/__pycache__/main.cpython-313.pyc
-app/__pycache__/prompt_creator.cpython-313.pyc
-app/__pycache__/main.cpython-313.pyc
-app/__pycache__/prompt_creator.cpython-313.pyc
-app/__pycache__/main.cpython-313.pyc
