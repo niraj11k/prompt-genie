@@ -16,10 +16,12 @@ A simple Python web app that takes a task in plain English and returns an optimi
 ## 📦 Project Structure
 prompt-genie/
 ├── app/
-│ ├── main.py # FastAPI app
-│ ├── prompt_creator.py # GPT prompt logic
-│ └── templates/
-│ └── index.html # Web page for user input
+│   ├── static/
+│   │   └── style.css       👈 final Tailwind output
+│   ├── templates/
+│   │   └── index.html      👈 uses Tailwind classes
+│   ├── main.py             👈 FastAPI backend
+│   ├── prompt_creator.py
 ├── requirements.txt
 └── README.md
 
