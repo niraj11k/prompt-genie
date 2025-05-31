@@ -4,7 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.prompt_creator import create_prompt
-#import uvicorn
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load .env variables
 
 app = FastAPI()
 
@@ -27,7 +30,11 @@ async def privacy_policy(request: Request):
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "adsense_client": os.getenv("ADSENSE_CLIENT"),
+        "adsense_slot": os.getenv("ADSENSE_SLOT")      
+    })
 
 @app.post("/generate")
 async def generate_prompt(request: Request):
