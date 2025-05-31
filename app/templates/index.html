@@ -6,7 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6606002221521554"
      crossorigin="anonymous"></script>
-   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+   <!-- ✅ Tailwind Animation Config goes here -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 },
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-100 text-gray-800">
   <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded-lg shadow-sm" role="alert">
@@ -36,10 +54,22 @@
           🚀 Generate Prompt
         </button>
       </div>
+      <!-- Loading Spinner -->
+      <div id="loadingSpinner" class="flex justify-center mt-4 hidden">
+        <div class="animate-spin rounded-full h-6 w-6 border-4 border-indigo-500 border-t-transparent"></div>
+      </div>
+
       <!-- Result -->
       <div>
         <h2 class="text-lg font-semibold text-gray-800 mb-2">Optimized Prompt:</h2>
         <pre id="result" class="bg-gray-100 p-4 rounded-lg border border-gray-300 text-sm text-gray-700 whitespace-pre-wrap"></pre>
+      </div>
+      <!-- Add Copy Button -->
+      <div id="copyButtonContainer" class="text-center mt-4 hidden opacity-0">
+        <button onclick="copyToClipboard()"
+          class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 font-medium">
+          📋 Copy to Clipboard
+        </button>
       </div>
       <footer class="text-center mt-6 text-sm text-gray-500">
         <a href="/privacy" class="underline hover:text-gray-700">Privacy Policy</a>
@@ -66,6 +96,14 @@
     async function generatePrompt() {
       const task = document.getElementById('task').value;
       const provider = document.getElementById('provider').value;
+      const resultElement = document.getElementById('result');
+      const copyButtonContainer = document.getElementById('copyButtonContainer');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const generateBtn = document.querySelector('button[onclick="generatePrompt()"]');
+      // Start: show spinner, disable button
+      loadingSpinner.classList.remove('hidden');
+      generateBtn.disabled = true;
+      generateBtn.classList.add('opacity-50', 'cursor-not-allowed');
       try {
         const response = await fetch('http://127.0.0.1:8000/generate', {
           method: 'POST',
@@ -73,12 +111,44 @@
           body: JSON.stringify({ task, provider })
         });
         const data = await response.json();
-        document.getElementById('result').innerText = data.prompt || data.error || "❌ Unexpected error";
+        const output = data.prompt || data.error || "❌ Unexpected error";
+        resultElement.innerText = output;
+
+        // Show copy button if output is non-empty
+        if (output.trim().length > 0) {
+          // Add fade-in animation
+          copyButtonContainer.classList.remove('hidden', 'opacity-0');
+          copyButtonContainer.classList.add('animate-fade-in');
+        } else {
+          copyButtonContainer.classList.add('hidden');
+        }
       } catch (err) {
-        document.getElementById('result').innerText = "❌ Unable to reach server. Check console.";
+        resultElement.innerText = "❌ Unable to reach server. Check console.";
+        copyButtonContainer.classList.add('hidden');
         console.error(err);
+      } finally {
+        // End: hide spinner, re-enable button
+        loadingSpinner.classList.add('hidden');
+        generateBtn.disabled = false;
+        generateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
       }
     }
+    function copyToClipboard() {
+    const resultElement = document.getElementById('result');
+    const textToCopy = resultElement.innerText;
+
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          alert("✅ Copied to clipboard!");
+        })
+        .catch(err => {
+          console.error("❌ Failed to copy:", err);
+        });
+    } else {
+      alert("❌ No content to copy!");
+    }
+  }
   </script>
 </body>
 </html>
