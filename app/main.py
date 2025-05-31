@@ -21,6 +21,10 @@ app.add_middleware(
 # Templates
 templates = Jinja2Templates(directory="app/templates")
 
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy_policy(request: Request):
+    return templates.TemplateResponse("privacy.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
