@@ -4,40 +4,58 @@
   <meta charset="UTF-8">
   <title>Prompt Genie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/style.css">
+  <!-- link rel="stylesheet" href="/static/style.css" -->
+   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>Prompt Genie</h1>
-    <label for="provider">Choose Provider:</label>
-    <select id="provider">
-      <option value="openai">OpenAI</option>
-      <option value="together" selected="t">Together.ai</option>
-      <option value="huggingface">Hugging Face</option>
-    </select>
-    <label for="task">Your Task:</label>
-    <textarea id="task" rows="6" placeholder="Enter your task in simple English"></textarea>
-    <button onclick="generatePrompt()">Generate Prompt</button>
-    <h2>Optimized Prompt:</h2>
-    <pre id="result"></pre>
-    <script>
-      async function generatePrompt() {
-        const task = document.getElementById('task').value;
-        const provider = document.getElementById('provider').value;
-        try {
-          const response = await fetch('http://127.0.0.1:8000/generate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ task, provider })
-          });
-          const data = await response.json();
-          document.getElementById('result').innerText = data.prompt || data.error || "❌ Unexpected error";
-        } catch (err) {
-          document.getElementById('result').innerText = "❌ Unable to reach server. Check console.";
-          console.error(err);
-        }
-      }
-    </script>
+<body class="bg-gray-100 text-gray-800">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white shadow-xl rounded-2xl p-8 max-w-xl w-full space-y-6">
+      <h1 class="text-3xl font-bold text-center text-indigo-600">🧞 Prompt Genie</h1>
+      <!-- Provider Dropdown -->
+       <div>
+        <label for="provider">Choose Provider:</label>
+          <select id="provider">
+            <option value="openai">OpenAI</option>
+            <option value="together" selected="t">Together.ai</option>
+            <option value="huggingface">Hugging Face</option>
+          </select>
+       </div>
+       <div>
+        <label for="task">Your Task:</label>
+        <textarea id="task" rows="6" placeholder="Enter your task in plain English"
+          class="block w-full rounded-lg border border-gray-300 shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 resize-y"></textarea>
+       </div>
+       <!-- Button -->
+      <div class="text-center">
+        <button onclick="generatePrompt()"
+          class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200 font-medium">
+          🚀 Generate Prompt
+        </button>
+      </div>
+      <!-- Result -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Optimized Prompt:</h2>
+        <pre id="result" class="bg-gray-100 p-4 rounded-lg border border-gray-300 text-sm text-gray-700 whitespace-pre-wrap"></pre>
+      </div>
+    </div>
   </div>
+  <script>
+    async function generatePrompt() {
+      const task = document.getElementById('task').value;
+      const provider = document.getElementById('provider').value;
+      try {
+        const response = await fetch('http://127.0.0.1:8000/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task, provider })
+        });
+        const data = await response.json();
+        document.getElementById('result').innerText = data.prompt || data.error || "❌ Unexpected error";
+      } catch (err) {
+        document.getElementById('result').innerText = "❌ Unable to reach server. Check console.";
+        console.error(err);
+      }
+    }
+  </script>
 </body>
 </html>
